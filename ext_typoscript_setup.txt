@@ -22,4 +22,4 @@ plugin.tx_less_pi1 {
 }
 
 # Example to insert less compiler in your page
-page.77 < plugin.tx_less_pi1
+# page.77 < plugin.tx_less_pi1
