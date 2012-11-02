@@ -48,7 +48,7 @@ class tx_less_Less_ParserWrapper {
 		if($outFname === null) {
 			$outFname = PATH_site . 'typo3temp/Cache/Data/Less/' . basename($fname);
 		}
-		$outFname = $outFname . '-' . crc32($fname) . '-' . crc32(serialize($this->overrides)) . '.css';
+		$outFname = $outFname . '-' . hash('crc32b', $fname) . '-' . hash('crc32b', serialize($this->overrides)) . '.css';
 		/**
 		 * ensure directory exists
 		 */
