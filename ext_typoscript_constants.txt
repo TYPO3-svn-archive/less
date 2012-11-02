@@ -1,0 +1,5 @@
+plugin.tx_less_pi1 {
+	enable = 1
+        
+        debug = 0
+}
