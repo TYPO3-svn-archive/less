@@ -1,6 +1,6 @@
 <?php
 
-class tx_less_Less_ParserWrapper {
+class tx_Less_Less_ParserWrapper {
 	/**
 	 * @var null|lessc
 	 */

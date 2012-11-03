@@ -1,6 +1,6 @@
 <?php
 
-class tx_less_Less_ParserFactory {
+class tx_Less_Less_ParserFactory {
 	/**
 	 * @return tx_less_Less_ParserWrapper
 	 */
@@ -11,7 +11,7 @@ class tx_less_Less_ParserFactory {
 			include_once(t3lib_extMgm::extPath('less') . 'lib/lessc-' . $confArr['version'] . '.inc.php');
 		}
 		// build instance to usage
-		$lessWrapper = t3lib_div::makeInstance('tx_less_Less_ParserWrapper');
+		$lessWrapper = t3lib_div::makeInstance('tx_Less_Less_ParserWrapper');
 		$lessWrapper->setLessParser(new lessc());
 		return $lessWrapper;
 	}
