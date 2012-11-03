@@ -78,7 +78,7 @@ class tx_Less_Less_ParserWrapper {
 		 * ensure directory exists
 		 */
 		t3lib_div::mkdir_deep(PATH_site . 'typo3temp/', 'Cache/Data/Less/');
-		file_put_contents($outFname, $this->compile(file_get_contents(t3lib_div::getFileAbsFileName($fname))));
+		file_put_contents($outFname, $this->compile(file_get_contents($fname)));
 		return $outFname;
 	}
 	function setOverrides($overrides) {

@@ -40,14 +40,14 @@ class tx_Less_Hooks_T3libPageRendererRenderPreProcessHook  {
 		foreach($params['cssFiles'] as $cssFile => $cssFileSettings) {
 			// @todo handle extension added files with prepended backpath correctly!
 
-			$currentFile = t3lib_div::getFileAbsFileName($cssFile);
+			$currentFile = $this->fixPathForInput($cssFile);
 			$pathInfo    = pathinfo($currentFile);
 
 			if($pathInfo['extension'] === 'less') {
-				$less = tx_Less_Less_ParserFactory::get();
+				$less = Tx_Less_Less_ParserFactory::get();
 				$less->setOverrides($this->getOverrides());
 				$compiledLessFile = $less->compileFile($currentFile);
-				$compiledLessFile = $this->fixPath($compiledLessFile);
+				$compiledLessFile = $this->fixPathForOutput($compiledLessFile);
 				$cssFilesArray[$compiledLessFile] = $cssFileSettings;
 			} else {
 				$cssFilesArray[$cssFile] = $cssFileSettings;
@@ -59,15 +59,21 @@ class tx_Less_Hooks_T3libPageRendererRenderPreProcessHook  {
 		 * iterate $params['cssInline']
 		 */
 	}
-	protected function fixPath($compiledLessFile) {
+	protected function fixPathForInput($file) {
 		if(TYPO3_MODE === 'FE') {
-			//ugly fix, but it's needed to fix a path problem
-			$compiledLessFile = str_replace(PATH_site, '', $compiledLessFile);
+			$file = t3lib_div::getFileAbsFileName($file);
 		} elseif(TYPO3_MODE === 'BE') {
-			 //@todo make this ^^ work in be too
-			die($compiledLessFile);
+			$file = PATH_typo3 . $file;
 		}
-		return $compiledLessFile;
+		return $file;
+	}
+	protected function fixPathForOutput($file) {
+		if(TYPO3_MODE === 'FE') {
+			$file = str_replace(PATH_site, '', $file);
+		} elseif(TYPO3_MODE === 'BE') {
+			$file = str_replace(PATH_site, '../', $file);
+		}
+		return $file;
 	}
 	protected function getOverrides() {
 		$overrides = array();

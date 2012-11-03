@@ -25,7 +25,7 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-class tx_Less_Less_ParserFactory {
+class Tx_Less_Less_ParserFactory {
 	/**
 	 * @return tx_less_Less_ParserWrapper
 	 */
