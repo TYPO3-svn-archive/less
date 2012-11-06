@@ -69,6 +69,9 @@ class tx_Less_Less_ParserWrapper {
 		/**
 		 * build filenames
 		 */
+		if(!is_file($fname)) {
+			return $fname;
+		}
 		$this->getLessParser()->setImportDir(array(dirname($fname)));
 		if($outFname === null) {
 			$outFname = PATH_site . 'typo3temp/Cache/Data/Less/' . basename($fname);
