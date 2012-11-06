@@ -113,7 +113,7 @@ class tx_Less_Hooks_T3libPageRendererRenderPreProcessHook  {
 			}
 			//
 		} elseif(TYPO3_MODE === 'BE') {
-			$configManager = t3lib_div::makeInstance('tx_less_Configuration_BeRegistry');
+			$configManager = t3lib_div::makeInstance('tx_Less_Configuration_BeRegistry');
 			$overrides = $configManager->getAll();
 		}
 		return $overrides;

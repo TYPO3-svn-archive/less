@@ -88,17 +88,21 @@ class tx_Less_Less_ParserWrapper {
 		if($outputFilename === null) {
 			$outputFilename = PATH_site . 'typo3temp/Cache/Data/Less/' . basename($inputFilename);
 		}
-		$preparedFilename = $outputFilename . '-' . hash('crc32b', $inputFilename) . '-' . hash('crc32b', serialize($this->overrides)) . '.less';
-		$cacheFilename    = $outputFilename . '-' . hash('crc32b', $inputFilename) . '-' . hash('crc32b', serialize($this->overrides)) . '.cache';
-		$outputFilename   = $outputFilename . '-' . hash('crc32b', $inputFilename) . '-' . hash('crc32b', serialize($this->overrides)) . '.css';
+		$noExtensionFilename = $outputFilename . '-' . hash('crc32b', $inputFilename) . '-' . hash('crc32b', serialize($this->overrides)) . '-' . hash('crc32b', filemtime($inputFilename));
+		$preparedFilename    = $noExtensionFilename . '.less';
+		$cacheFilename       = $noExtensionFilename . '.cache';
+		$outputFilename      = $noExtensionFilename . '.css';
 
+		//check for cache file
 		if(file_exists($cacheFilename)) {
 			$cache = unserialize(file_get_contents($cacheFilename));
 		} else {
 			$cache = $preparedFilename;
-			if(filemtime($preparedFilename) < filemtime($inputFilename)) {
-				file_put_contents($preparedFilename, $this->prepareCompile(file_get_contents($inputFilename)));
-			}
+		}
+
+		//write intermediate file, if the source has been changed, the rest is done by the cache management
+		if(filemtime($preparedFilename) < filemtime($inputFilename)) {
+			file_put_contents($preparedFilename, $this->prepareCompile(file_get_contents($inputFilename)));
 		}
 
 		$this->getLessParser()->setImportDir(array(dirname($inputFilename)));
