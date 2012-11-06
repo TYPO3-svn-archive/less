@@ -1,2 +1,51 @@
+Less in general
+=====
 
-Feel free to add some documentation or simply add a link to the online manual.
+You can find the documentation of less css on http://lesscss.org
+This project uses http://leafo.net/lessphp/ to parse the lessfile and store it as css file
+
+Frontend
+=====
+
+Example TYPOScript:
+
+	page.includeCSS.testLess = EXT:less/Resources/Private/Less/Example.less
+	page.includeCSS.testLess.overrides {
+		linkColor = green!important
+	}
+
+	plugin.tx_less {
+		overrides {
+			linkColor = TEXT
+			linkColor.value = blue!important
+		}
+	}
+
+Example less file:
+	@linkColor: blue!important;
+
+	a {
+		color: @linkColor;
+	}
+
+	h1 {
+		a {
+			color: lighten(@linkColor, 20%);
+		}
+	}
+
+
+Backend
+=====
+
+Example for ext_tables.php
+
+	$GLOBALS['TYPO3_CONF_VARS']['typo3/backend.php']['additionalBackendItems'][] = t3lib_extMgm::extPath($_EXTKEY).'Classes/BE/Hook.php';
+
+Content of the Hook.php
+
+	<?php
+		$TYPO3backend->addCssFile('less_test', t3lib_extMgm::extRelPath('less_test') . 'Resources/Public/Stylesheets/test_be.less');
+	?>
+
+The lessfile may contain any valid less content.

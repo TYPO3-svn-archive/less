@@ -51,6 +51,10 @@ class tx_Less_Less_ParserWrapper {
 		return $this->lessParser;
 	}
 
+	function setOverrides($overrides) {
+		$this->overrides = t3lib_div::array_merge_recursive_overrule($this->overrides, $overrides);
+	}
+
 	/**
 	 * @param $string
 	 * @param null|string $name
@@ -65,28 +69,37 @@ class tx_Less_Less_ParserWrapper {
 	 * @param $fname
 	 * @param null|string $outFname
 	 */
-	function compileFile($fname, $outFname = null) {
-		/**
-		 * build filenames
-		 */
-		if(!is_file($fname)) {
-			return $fname;
+	function compileFile($inputFilename, $outputFilename = null) {
+		if(!$this->prepareEnvironment($inputFilename)) {
+			return $inputFilename;
 		}
-		$this->getLessParser()->setImportDir(array(dirname($fname)));
-		if($outFname === null) {
-			$outFname = PATH_site . 'typo3temp/Cache/Data/Less/' . basename($fname);
+
+		if($outputFilename === null) {
+			$outputFilename = PATH_site . 'typo3temp/Cache/Data/Less/' . basename($inputFilename);
 		}
-		$outFname = $outFname . '-' . hash('crc32b', $fname) . '-' . hash('crc32b', serialize($this->overrides)) . '.css';
-		/**
-		 * ensure directory exists
-		 */
-		t3lib_div::mkdir_deep(PATH_site . 'typo3temp/', 'Cache/Data/Less/');
-		file_put_contents($outFname, $this->compile(file_get_contents($fname)));
-		return $outFname;
+		$preparedFilename = $outputFilename . '-' . hash('crc32b', $inputFilename) . '-' . hash('crc32b', serialize($this->overrides)) . '.less';
+		$cacheFilename    = $outputFilename . '-' . hash('crc32b', $inputFilename) . '-' . hash('crc32b', serialize($this->overrides)) . '.cache';
+		$outputFilename   = $outputFilename . '-' . hash('crc32b', $inputFilename) . '-' . hash('crc32b', serialize($this->overrides)) . '.css';
+
+		if(file_exists($cacheFilename)) {
+			$cache = unserialize(file_get_contents($cacheFilename));
+		} else {
+			$cache = $preparedFilename;
+			if(filemtime($preparedFilename) < filemtime($inputFilename)) {
+				file_put_contents($preparedFilename, $this->prepareCompile(file_get_contents($inputFilename)));
+			}
+		}
+
+		$this->getLessParser()->setImportDir(array(dirname($inputFilename)));
+		$newCache = $this->getLessParser()->cachedCompile($cache);
+		if((!is_array($cache)) ||  ($newCache["updated"] > $cache["updated"])) {
+			file_put_contents($cacheFilename,  serialize($newCache));
+			file_put_contents($outputFilename, $newCache['compiled']);
+		}
+
+		return $outputFilename;
 	}
-	function setOverrides($overrides) {
-		$this->overrides = t3lib_div::array_merge_recursive_overrule($this->overrides, $overrides);
-	}
+
 	function prepareCompile($string) {
 		/**
 		 * Change the initial value of a less constant before compiling the file
@@ -102,5 +115,15 @@ class tx_Less_Less_ParserWrapper {
 			}
 		}
 		return $string;
+	}
+	function prepareEnvironment($fname) {
+		t3lib_div::mkdir_deep(PATH_site . 'typo3temp/', 'Cache/Data/Less/');
+		if(!is_dir(PATH_site . 'typo3temp/Cache/Data/Less/')) {
+			throw new Exception('Can´t create cache directory PATH_site/typo3temp/Cache/Data/Less/');
+		}
+		if(!is_file($fname)) {
+			return false;
+		}
+		return true;
 	}
 }

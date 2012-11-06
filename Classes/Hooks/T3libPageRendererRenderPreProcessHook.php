@@ -44,6 +44,7 @@ class tx_Less_Hooks_T3libPageRendererRenderPreProcessHook  {
 			$pathInfo    = pathinfo($currentFile);
 
 			if($pathInfo['extension'] === 'less') {
+				// @todo if we would use the js parser, we would add the js now and change rel to "stylesheet/less" ;)
 				$less = Tx_Less_Less_ParserFactory::get();
 				$less->setOverrides($this->getOverrides());
 				$compiledLessFile = $less->compileFile($currentFile);
