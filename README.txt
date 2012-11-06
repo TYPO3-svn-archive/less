@@ -40,6 +40,8 @@ Backend
 
 Example for ext_tables.php
 
+	$overrides = t3lib_div::makeInstance('tx_Less_Configuration_BeRegistry');
+	$overrides->set('color', 'blue');
 	$GLOBALS['TYPO3_CONF_VARS']['typo3/backend.php']['additionalBackendItems'][] = t3lib_extMgm::extPath($_EXTKEY).'Classes/BE/Hook.php';
 
 Content of the Hook.php
