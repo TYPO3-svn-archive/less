@@ -60,6 +60,13 @@ class tx_Less_Hooks_T3libPageRendererRenderPreProcessHook  {
 		 * iterate $params['cssInline']
 		 */
 	}
+
+	/**
+	 * Just makes path absolute
+	 *
+	 * @param $file
+	 * @return string
+	 */
 	protected function fixPathForInput($file) {
 		if(TYPO3_MODE === 'FE') {
 			$file = t3lib_div::getFileAbsFileName($file);
@@ -68,6 +75,13 @@ class tx_Less_Hooks_T3libPageRendererRenderPreProcessHook  {
 		}
 		return $file;
 	}
+
+	/**
+	 * Fixes the path for fe or be usage
+	 *
+	 * @param $file
+	 * @return mixed
+	 */
 	protected function fixPathForOutput($file) {
 		if(TYPO3_MODE === 'FE') {
 			$file = str_replace(PATH_site, '', $file);
@@ -76,6 +90,12 @@ class tx_Less_Hooks_T3libPageRendererRenderPreProcessHook  {
 		}
 		return $file;
 	}
+
+	/**
+	 * Gets the overrides (replacements) for the less file as array()
+	 *
+	 * @return array
+	 */
 	protected function getOverrides() {
 		$overrides = array();
 

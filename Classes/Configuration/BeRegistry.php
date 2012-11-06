@@ -32,6 +32,8 @@ class tx_Less_Configuration_BeRegistry implements t3lib_Singleton {
 	protected $values = array();
 
 	/**
+	 * get an override value
+	 *
 	 * @param string $name
 	 * @return mixed|null
 	 */
@@ -44,6 +46,8 @@ class tx_Less_Configuration_BeRegistry implements t3lib_Singleton {
 	}
 
 	/**
+	 * set an override value
+	 *
 	 * @param string $name
 	 * @param $value
 	 */
@@ -52,6 +56,8 @@ class tx_Less_Configuration_BeRegistry implements t3lib_Singleton {
 	}
 
 	/**
+	 * get all override values
+	 *
 	 * @return array
 	 */
 	function getAll() {

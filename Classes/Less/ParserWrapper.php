@@ -45,17 +45,26 @@ class tx_Less_Less_ParserWrapper {
 	}
 
 	/**
+	 * returns the less parser
+	 *
 	 * @return lessc|null
 	 */
 	function getLessParser() {
 		return $this->lessParser;
 	}
 
+	/**
+	 * set overrides for later usage
+	 *
+	 * @param $overrides
+	 */
 	function setOverrides($overrides) {
 		$this->overrides = t3lib_div::array_merge_recursive_overrule($this->overrides, $overrides);
 	}
 
 	/**
+	 * compiles a string
+	 *
 	 * @param $string
 	 * @param null|string $name
 	 * @return string
@@ -66,6 +75,8 @@ class tx_Less_Less_ParserWrapper {
 	}
 
 	/**
+	 * compile a file and use cached compile to ensure all speed possible
+	 *
 	 * @param $fname
 	 * @param null|string $outFname
 	 */
@@ -100,7 +111,13 @@ class tx_Less_Less_ParserWrapper {
 		return $outputFilename;
 	}
 
-	function prepareCompile($string) {
+	/**
+	 * Apply replacements
+	 *
+	 * @param $string
+	 * @return mixed
+	 */
+	protected function prepareCompile($string) {
 		/**
 		 * Change the initial value of a less constant before compiling the file
 		 */
@@ -116,7 +133,15 @@ class tx_Less_Less_ParserWrapper {
 		}
 		return $string;
 	}
-	function prepareEnvironment($fname) {
+
+	/**
+	 * Ensures, that environment is valid
+	 *
+	 * @param $fname
+	 * @return bool
+	 * @throws Exception
+	 */
+	protected function prepareEnvironment($fname) {
 		t3lib_div::mkdir_deep(PATH_site . 'typo3temp/', 'Cache/Data/Less/');
 		if(!is_dir(PATH_site . 'typo3temp/Cache/Data/Less/')) {
 			throw new Exception('Can´t create cache directory PATH_site/typo3temp/Cache/Data/Less/');

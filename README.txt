@@ -17,12 +17,12 @@ Example TYPOScript:
 	plugin.tx_less {
 		overrides {
 			linkColor = TEXT
-			linkColor.value = blue!important
+			linkColor.value = blue
 		}
 	}
 
 Example less file:
-	@linkColor: blue!important;
+	@linkColor: blue;
 
 	a {
 		color: @linkColor;
