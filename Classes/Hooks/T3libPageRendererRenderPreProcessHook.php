@@ -98,7 +98,6 @@ class tx_Less_Hooks_T3libPageRendererRenderPreProcessHook  {
 	 */
 	protected function getOverrides() {
 		$overrides = array();
-
 		if(TYPO3_MODE === 'FE') {
 			if((array_key_exists('plugin.',    $GLOBALS['TSFE']->tmpl->setup))
 			&& (array_key_exists('tx_less.',   $GLOBALS['TSFE']->tmpl->setup['plugin.']))

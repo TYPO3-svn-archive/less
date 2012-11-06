@@ -35,7 +35,7 @@ Example less file:
 	}
 
 
-Backend
+Backend: Include in backend.php
 =====
 
 Example for ext_tables.php
@@ -49,5 +49,15 @@ Content of the Hook.php
 	<?php
 		$TYPO3backend->addCssFile('less_test', t3lib_extMgm::extRelPath('less_test') . 'Resources/Public/Stylesheets/test_be.less');
 	?>
+
+Backend: Include in template.php
+=====
+
+Example of ext_tables.php
+
+	$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['typo3/template.php']['preHeaderRenderHook'] = ...
+
+Content of the Classfile:
+
 
 The lessfile may contain any valid less content.
