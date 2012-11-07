@@ -9,6 +9,5 @@ return array(
 	'tx_less_hooks_t3libpagerendererrenderpreprocesshook' => $extensionClassesPath . 'Hooks/T3libPageRendererRenderPreProcessHook.php',
 	'tx_less_less_parserfactory' => $extensionClassesPath . 'Less/ParserFactory.php',
 	'tx_less_less_parserwrapper' => $extensionClassesPath . 'Less/ParserWrapper.php',
-	'tx_less_pi1' => $extensionPath . 'pi1/class.tx_less_pi1.php',
 );
 ?>

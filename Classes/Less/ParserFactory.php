@@ -2,7 +2,8 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) Kay Strobach
+*  (c) 2012 Kay Strobach <typo3@kay-strobach.de>
+*
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -13,9 +14,6 @@
 *
 *  The GNU General Public License can be found at
 *  http://www.gnu.org/copyleft/gpl.html.
-*  A copy is found in the textfile GPL.txt and important notices to the license
-*  from the author is found in LICENSE.txt distributed with these scripts.
-*
 *
 *  This script is distributed in the hope that it will be useful,
 *  but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -25,6 +23,11 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
+/**
+ * @author Kay Strobach
+ * @package Less
+ */
+
 class Tx_Less_Less_ParserFactory {
 	/**
 	 * @return tx_less_Less_ParserWrapper
@@ -33,7 +36,7 @@ class Tx_Less_Less_ParserFactory {
 		// ensure no one else has loaded lessc already ;)
 		if(!class_exists('lessc')) {
 			$confArr = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['less']);
-			include_once(t3lib_extMgm::extPath('less') . 'lib/lessc-' . $confArr['version'] . '.inc.php');
+			include_once(t3lib_extMgm::extPath('less') . 'Contrib/lessc.inc.php');
 		}
 		// build instance to usage
 		$lessWrapper = t3lib_div::makeInstance('tx_Less_Less_ParserWrapper');

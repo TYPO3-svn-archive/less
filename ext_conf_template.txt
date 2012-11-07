@@ -1,2 +1,0 @@
-  # cat=basic//10; type=options[0.3.8,0.3.3,0.2.0]; label=LLL:EXT:less/locallang.xml:extmng.version
-version = 0.3.8

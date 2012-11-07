@@ -59,5 +59,37 @@ Example of ext_tables.php
 
 Content of the Classfile:
 
+	Just make a class and add a function, you will get an array of params with a reference to the pagerenderer.
+	Just add the less file with addCssFile
+
 
 The lessfile may contain any valid less content.
+
+
+Old Style (now unsupported)
+=====
+plugin.tx_less_pi1 {
+	# define single less-files and css destination file
+	lessFiles {
+		1 {
+#			less = fileadmin/templates/css/screen.less
+		}
+	}
+
+	# point to the directory of less-Files
+	lessDir = fileadmin/templates/
+
+	# Search recursive for less-Files in "lessDir"
+	recursivityLevel = 99
+
+	# Show debug informations
+	debug = {$plugin.tx_less_pi1.debug}
+
+	# enable less compiler
+	# if website is in production set this to 0,
+	# otherwise less compile the css on every pageload
+	enable = {$plugin.tx_less_pi1.enable}
+}
+
+# Example to insert less compiler in your page
+# page.77 < plugin.tx_less_pi1
