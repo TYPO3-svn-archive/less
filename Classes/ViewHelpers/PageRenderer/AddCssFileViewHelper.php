@@ -68,5 +68,4 @@ class Tx_Less_ViewHelpers_PageRenderer_AddCssFileViewHelper extends Tx_Fed_ViewH
 	}
 
 }
-
 ?>
