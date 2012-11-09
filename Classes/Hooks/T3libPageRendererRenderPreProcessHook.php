@@ -52,6 +52,7 @@ class tx_Less_Hooks_T3libPageRendererRenderPreProcessHook  {
 				$less->setOverrides($this->getOverrides());
 				$compiledLessFile = $less->compileFile($currentFile);
 				$compiledLessFile = $this->fixPathForOutput($compiledLessFile);
+				$cssFileSettings['file'] = $compiledLessFile;          //needed for TYPO3 4.6+ ;)
 				$cssFilesArray[$compiledLessFile] = $cssFileSettings;
 			} else {
 				$cssFilesArray[$cssFile] = $cssFileSettings;
